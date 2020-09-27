@@ -1,0 +1,55 @@
+<!-- A light-weight testing suite for JS Ninja-Flavored Scripts -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keurig | JavaScript Testing Suite</title>
+    <script>
+        (function(){
+            let results;
+            this.assert = function assert(value, desc) {
+                const li = document.createElement("li");
+                li.className = value ? "pass" : "fail";
+                li.appendChild(document.createTextNode(desc));
+                results.appendChild(li);
+                if (!value){
+                li.parentNode.parentNode.className = "fail";
+                } 
+                return li;   
+            };
+            this.test = function test(name, fn) {
+                results = document.getElementById("results");
+                results = assert(true, name).appendChild(
+                    document.createElement("ul"));
+                fn();
+            };
+        })();
+
+        window.onload = function() {
+            test("Light Roast Test", function(){
+                assert(true, "First assertion done");
+                assert(true, "Second assertion done");
+                assert(true, "Third assertion done");
+            });
+            test("Medium Roast Test", function(){
+                assert(true, "First assertion completed");
+                assert(false, "Second assertion failed");
+                assert(true, "Third assertion done");
+            });
+            test("Dark Roast Test", function(){
+                assert(null, "Fail");
+                assert(5, "pass");
+            });
+        };
+    </script>
+
+    <style>
+        #results li.pass { color: green; }
+        #results li.fail { color: red; }
+    </style>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+</html>
